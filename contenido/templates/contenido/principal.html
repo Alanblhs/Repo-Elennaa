@@ -1,0 +1,77 @@
+{% extends "contenido/encabezado.html" %}
+{% load static %}
+
+{% block titulo %}Inicio{% endblock %}
+
+{% block imagen %}
+<img src="{% static 'contenido/images/home.png' %}" class="img-fluid mx-auto d-block" style="max-height: 120px;" alt="Inicio">
+{% endblock %}
+
+{% block titulo_principal %}
+Bienvenido <span>CursosDjango</span>
+{% endblock %}
+
+{% block url %}
+<div class="breadcrumb-line">
+  <ul class="breadcrumb">
+    <a href="{% url 'Principal' %}">
+      {% if request.path == '/' %}
+        Inicio
+      {% else %}
+        Inicio{{ request.path }}
+      {% endif %}
+    </a>
+  </ul>
+</div>
+{% endblock %}
+
+{% block contenido %}
+<div class="page-header">
+  <div class="page-title">
+    <h3>Bienvenido a CursosDjango</h3>
+    <small>Explora nuestros recursos para aprender desarrollo web</small>
+  </div>
+</div>
+
+<p class="lead">Aquí puedes aprender desde HTML hasta Django avanzado, con una estructura organizada, moderna y profesional.</p>
+
+<h3 class="mt-5">Cursos disponibles</h3>
+<div class="table-responsive">
+  <table class="table table-bordered table-striped text-center align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>Portada</th>
+        <th>Clave</th>
+        <th>Nombre</th>
+        <th>Nivel</th>
+        <th>Categoría</th>
+        <th>Publicado</th>
+        <th>Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for curso in cursos %}
+        <tr>
+          <td>
+            {% if curso.portada %}
+              <img src="{{ curso.portada.url }}" alt="{{ curso.nombre }}" style="max-height: 80px; border-radius: 5px;">
+            {% else %}
+              <span class="text-muted">Sin imagen</span>
+            {% endif %}
+          </td>
+          <td>{{ curso.clave }}</td>
+          <td>{{ curso.nombre }}</td>
+          <td>{{ curso.nivel }}</td>
+          <td>{{ curso.categoria }}</td>
+          <td>{{ curso.publicado|yesno:"Sí,No" }}</td>
+          <td>{{ curso.fecha_creacion|date:"d M Y" }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="7" class="text-center text-muted">No hay cursos registrados aún.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

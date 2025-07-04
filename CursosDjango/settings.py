@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'contenido',
     'cursos.apps.CursosConfig',
+    
 
 ]
 

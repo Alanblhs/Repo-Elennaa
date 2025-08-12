@@ -1,12 +1,8 @@
 from django.shortcuts import render
 from cursos.models import Curso
 
-# Create your views here.
-
-from django.shortcuts import HttpResponse
-
 def principal(request):
-    cursos = Curso.objects.filter(publicado=True)
+    cursos = Curso.objects.filter(publicado=True).order_by('-fecha_creacion')[:5]
     return render(request, 'contenido/principal.html', {'cursos': cursos})
 
 def cursos(request):

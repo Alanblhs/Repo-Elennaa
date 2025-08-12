@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 
+import os
+from pathlib import Path  # Si estás usando Path, manten esta línea
+
+# El resto de tu configuración...
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -31,6 +35,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -39,6 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'contenido',
     'cursos.apps.CursosConfig',
+    'admin_interface',
+    'colorfield',
+    
+    
+
     
 
 ]
@@ -53,13 +63,19 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+
+
 ROOT_URLCONF = 'CursosDjango.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),          # Templates globales
+            os.path.join(BASE_DIR, 'contenido/templates') # Templates de la app contenido
+        ],
+        'APP_DIRS': True,  # Para buscar en templates dentro de cada app
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -77,12 +93,48 @@ WSGI_APPLICATION = 'CursosDjango.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
+'''DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
+}'''
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'cursos',
+        'USER': 'root',
+        'PASSWORD':'admin' ,
+        'HOST': 'localhost',
+        'PORT': '3306',
+    }
+
 }
+
+
+
+JAZZMIN_SETTINGS = {
+    "site_title": "Panel de Seguridad",
+    "site_header": "Administración de Seguridad",
+    "site_brand": "SeguridadApp",
+    "welcome_sign": "Bienvenido al panel de Seguridad",
+    "copyright": "SeguridadApp © 2025",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "theme": "darkly",  # Puedes probar otros como 'flatly', 'darkly', 'superhero'
+}
+
+
+JAZZMIN_UI_TWEAKS = {
+    "theme": "darkly",
+    "navbar": "navbar-dark",
+    "sidebar": "sidebar-dark-primary",
+    "accent": "accent-teal",
+    "brand_colour": "navbar-primary",
+}
+
 
 
 # Password validation
@@ -107,7 +159,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'es-es'
 
 TIME_ZONE = 'UTC'
 

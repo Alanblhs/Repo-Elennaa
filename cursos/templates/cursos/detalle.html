@@ -1,0 +1,21 @@
+{% extends 'contenido/encabezado.html' %}
+
+{% block content %}
+<h1>{{ curso.nombre }}</h1>
+<div class="row">
+    <div class="col-md-4">
+        <img src="{{ curso.portada.url }}" alt="{{ curso.nombre }}" class="img-fluid">
+    </div>
+    <div class="col-md-8">
+        <p><strong>Clave:</strong> {{ curso.clave }}</p>
+        <p><strong>Descripción:</strong> {{ curso.descripcion }}</p>
+        <p><strong>Nivel:</strong> {{ curso.nivel }}</p>
+        <p><strong>Categoría:</strong> {{ curso.get_categoria_display }}</p>
+        <p><strong>Publicado:</strong> {% if curso.publicado %}Sí{% else %}No{% endif %}</p>
+        <p><strong>Fecha de creación:</strong> {{ curso.fecha_creacion }}</p>
+        
+        <a href="{% url 'cursos:editar' curso.pk %}" class="btn btn-warning">Editar</a>
+        <a href="{% url 'cursos:listar' %}" class="btn btn-secondary">Volver</a>
+    </div>
+</div>
+{% endblock %}

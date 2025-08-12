@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>{% block titulo %}CursosDjango{% endblock %}</title>
   {% load static %}
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="{% static 'contenido/css/estilos.css' %}" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{% static 'contenido/css/estilos.css' %}" rel="stylesheet">
 </head>
 <body>
   <!-- Menú superior claro -->
   <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
-      <a class="navbar-brand fw-bold" href="{% url 'Principal' %}">CursosDjango</a>
+      <a class="navbar-brand fw-bold" href="{% url 'contenido:principal' %}">CursosDjango</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarMenu">
         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item"><a class="nav-link" href="{% url 'Principal' %}">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'Cursos' %}">Cursos</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'Contacto' %}">Contacto</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'contenido:principal' %}">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'contenido:cursos' %}">Cursos</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'contenido:contacto' %}">Contacto</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'cursos:lista' %}">Administrar Cursos</a></li>
         </ul>
       </div>
     </div>
   </nav>
+
+  <!-- Resto del template... -->
+</body>
+</html>
 
   <!-- Encabezado moderno con tarjeta -->
   <header class="bg-light py-5">
@@ -39,11 +44,24 @@
     </div>
   </header>
 
+<!-- Mensaje -->
+  {% if messages %}
+<div class="container mt-3">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
   <!-- Contenido principal -->
   <main class="container my-5">
     {% block contenido %}{% endblock %}
   </main>
 
+ 
  
 
   <!-- Scripts -->

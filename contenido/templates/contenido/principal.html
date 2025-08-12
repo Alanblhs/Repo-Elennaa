@@ -14,7 +14,7 @@ Bienvenido <span>CursosDjango</span>
 {% block url %}
 <div class="breadcrumb-line">
   <ul class="breadcrumb">
-    <a href="{% url 'Principal' %}">
+    <a href="{% url 'contenido:principal' %}">
       {% if request.path == '/' %}
         Inicio
       {% else %}
@@ -61,8 +61,12 @@ Bienvenido <span>CursosDjango</span>
           </td>
           <td>{{ curso.clave }}</td>
           <td>{{ curso.nombre }}</td>
-          <td>{{ curso.nivel }}</td>
-          <td>{{ curso.categoria }}</td>
+          <td>
+            {% with ''|center:curso.nivel as range %}
+            {% for _ in range %}★{% endfor %}
+            {% endwith %}
+          </td>
+          <td>{{ curso.get_categoria_display }}</td>
           <td>{{ curso.publicado|yesno:"Sí,No" }}</td>
           <td>{{ curso.fecha_creacion|date:"d M Y" }}</td>
         </tr>
